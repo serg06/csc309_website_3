@@ -1,0 +1,13 @@
+# IDE
+.idea/
+
+# project
+database.db
+*.log
+node_modules/
+
+# asgt-related stuff
+features.txt
+members.txt
+setup.sh
+*.zip

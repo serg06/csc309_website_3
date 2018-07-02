@@ -1,0 +1,67 @@
+nav {
+    float: left;
+    margin: 0;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+}
+
+/* buttons from a1 */
+nav ul button {
+    text-decoration: none;
+    display: block;
+    padding: 5px;
+    width: 10em;
+    height: 4em;
+    margin: 5px;
+    border: 1px solid black;
+    background: black;
+    color: white;
+    cursor: pointer;
+}
+
+nav ul button.selected {
+    border: 4px solid red;
+}
+
+header {
+    text-align: center;
+}
+
+#login table {
+    border: 1px solid black;
+}
+
+#high_scores table, #high_scores th, #high_scores td {
+    border: 1px solid black;
+}
+
+/* spin high scores */
+#high_scores {
+    width: 100px;
+    height: 250px;
+
+    animation-name: spin;
+    animation-duration: 4000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* high quality font */
+h1 {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    color: yellow;
+    background: lawngreen;
+}

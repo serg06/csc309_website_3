@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:display="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta HTTP-EQUIV="EXPIRES" CONTENT="-1">
+    <title>Computing Science 309 Warehouse Wars</title>
+
+    <!--lib-->
+    <script language="javascript" src="lib/jquery-3.3.1.min.js"></script>
+    <script language="javascript" src="lib/babel.min.js"></script>
+    <script language="javascript" src="lib/react.js"></script>
+    <script language="javascript" src="lib/react-dom.js"></script>
+
+    <!-- Keep these two together!! -->
+    <script type="text/javascript">let global = {}; </script>
+    <script language="javascript" src="lib/constants.js"></script>
+
+    <!--views-->
+    <script type="text/babel" src="create_user.js"></script>
+    <script type="text/babel" src="login.js"></script>
+    <script type="text/babel" src="user_profile.js"></script>
+    <script type="text/babel" src="high_scores.js"></script>
+    <script type="text/babel" src="ww.js"></script>
+    <script type="text/babel" src="nav.js"></script>
+
+    <!--style-->
+    <link rel="stylesheet" type="text/css" href="index.css"/>
+</head>
+<body bgcolor="ffffff">
+<header id="errorField" style="display: none;"></header>
+
+<h1>REACT Warehouse Wars</h1>
+
+<center>
+    <div id="site"></div>
+</center>
+
+<script type="text/babel">
+    // The react document
+    class ReactSite extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {view: 'login', token: undefined};
+            this.setView = this.setView.bind(this);
+            this.onLogout = this.onLogout.bind(this);
+            this.onLogin = this.onLogin.bind(this);
+        }
+
+        render() {
+            switch (this.state.view) {
+                case 'login':
+                    return (
+                        <div>
+                            <LoginSection onClickRegister={() => {
+                                this.setView('create_user');
+                            }} onLogin={this.onLogin}/>
+                            <HighScoresSection/>
+                        </div>
+                    );
+                case 'create_user':
+                    return <CreateUserSection onClickLogin={() => {
+                        this.setView('login');
+                    }}/>;
+                case 'game':
+                    return (
+                        <div>
+                            <NavSection setView={this.setView} onLogout={this.onLogout}/>
+                            <GameSection token={this.state.token}/>
+                        </div>
+                    );
+                case 'user_profile':
+                    return (
+                        <div>
+                            <NavSection setView={this.setView} onLogout={this.onLogout}/>
+                            <UserProfileSection/>
+                        </div>
+                    );
+                case 'high_scores':
+                    return (
+                        <div>
+                            <NavSection setView={this.setView} onLogout={this.onLogout}/>
+                            <HighScoresSection/>
+                        </div>
+                    );
+                default:
+                    return <ErrorSection/>;
+            }
+        }
+
+        componentDidMount() {
+            this.authenticate();
+        }
+
+        setView(view) {
+            this.setState({view: view})
+        }
+
+        onLogin(token) {
+            console.log(`onLogin(${token})`);
+            this.setState({view: 'game', token: token})
+        }
+
+        onLogout() {
+            this.setView('login');
+        }
+
+        // log a user in if they're already authenticated (through cookies), else return to login screen
+        authenticate() {
+            $.ajax({
+                method: "GET",
+                url: "/api/auth/"
+            }).done((data, text_status, jqXHR) => {
+                this.onLogin(data.token);
+            }).fail(function (err) {
+                if (window.location.pathname !== '/') {
+                    window.location.href = '/';
+                }
+            });
+        }
+    }
+
+    // If invalid this.state.view
+    class ErrorSection extends React.Component {
+        constructor(props) {
+            super(props);
+        }
+
+        render() {
+            return (
+                <h1>Error: Invalid view {this.props.view}</h1>
+            );
+        }
+    }
+
+    // Render
+    ReactDOM.render(<ReactSite/>, document.getElementById('site'));
+</script>
+
+</body>
+</html>
+
