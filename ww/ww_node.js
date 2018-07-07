@@ -6,20 +6,27 @@ const bodyParser = require('body-parser');
 const crypto = require('crypto'); // md5
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+const config = require('./config.js');
+const fs = require('fs');
+const DB_PATH = 'db/database.db';
+
 
 const app = express();
 
-// secret jwt key (don't look, TA!)
-app.set('jwtsecret', '4j9gja9j03h2g08h31y0yg80wg80');
+// secret jwt key, change before running
+app.set('jwtsecret', config.jwtsecret);
 
 // body parser
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({extended: true})); // support encoded bodies
 
-// will create the db if it does not exist
-const db = new sqlite3.Database('db/database.db', (err) => {
+// load db if exists, else exit
+if (!fs.existsSync(DB_PATH)) {
+    throw 'Database does not exist! Run setup.sh.';
+}
+const db = new sqlite3.Database(DB_PATH, (err) => {
     if (err) {
-        console.log(`err connecting to db: ${err.message}`);
+        console.error(err.message);
     }
     console.log('Connected to the database.');
 });

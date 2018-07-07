@@ -1,10 +1,11 @@
 require('./static-content-react/lib/constants.js'); // ports n stuff
 const game = require('./game_node.js'); // ports n stuff
 const sqlite3 = require('sqlite3').verbose();
+const config = require('./config.js');
 
 // auth
 const jwt = require('jsonwebtoken');
-const jwtsecret = '4j9gja9j03h2g08h31y0yg80wg80';
+const jwtsecret = config.jwtsecret;
 
 // will create the db if it does not exist
 const db = new sqlite3.Database('db/database.db', (err) => {
@@ -183,7 +184,7 @@ wss.on('connection', function (ws) {
             case 'choose_world':
                 // get world
                 let world = parseInt(message.world);
-                if (world < 0 || world > (numWorlds-1)) {
+                if (world < 0 || world > (numWorlds - 1)) {
                     console.log(`attempt to join invalid world: ${world}`);
                     ws.send(JSON.stringify({msg: 'error', error: 'invalid world'}), noop);
                     return;

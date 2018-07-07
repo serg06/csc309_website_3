@@ -35,7 +35,7 @@ class GameSection extends React.Component {
     render() {
         // if not yet authenticated
         if (this.state.authenticated === undefined) {
-            return <div id="game" className="section">Authenticating...</div>
+            return <div id="game" className="section">Connecting to WS and authenticating...</div>
         } else if (this.state.authenticated === false) {
             return <div id="game" className="section">Authentication failed!</div>
         }
