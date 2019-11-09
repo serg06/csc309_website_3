@@ -151,11 +151,6 @@ class GameSection extends React.Component {
             <table id="game" className="section" style={{tableLayout: 'fixed'}}>
                 <tbody>
                 <tr>
-                    <th>Time elapsed:
-                        <div id="time_elapsed">0</div>
-                    </th>
-                </tr>
-                <tr>
                     {canvasBoard}
                     {legendAndControls}
                 </tr>
