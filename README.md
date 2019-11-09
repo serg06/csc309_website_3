@@ -39,13 +39,13 @@ The website is called "Warehouse Wars - React".
 ## Setup instructions
   - requires: npm and sqlite3, accessible from command line
   - run `./setup.sh`
-  - - Note: if on Windows, make sure to run the npm command from a Windows terminal, NOT a WSL (Linux on Windows) one. (Node for WSL is ancient (v4), it doesn't support newer syntax.)
+    - Note: if on Windows, make sure to run the npm command from a Windows terminal, NOT a WSL (Linux on Windows) one. (Node for WSL is ancient (v4), it doesn't support newer syntax.)
   - (optional) change `ww/static-content-react/lib/constants.js`
   - (recommended) change `ww/config.js`
 
 ## Run instructions
   - navigate to ww/
   - run game server in one terminal: `node gameserver_node.js`
-  - - Note: If on Windows, make sure to run the command from a Windows terminal, NOT a WSL one.
+    - Note: If on Windows, make sure to run the command from a Windows terminal, NOT a WSL one.
   - run web server in another: `node ww_node.js`
   - navigate to `localhost:10600` in your browser (assuming you haven't changed constants.js)
